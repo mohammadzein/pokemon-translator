@@ -45,7 +45,7 @@ class Pokeapi implements PokemonApiInterface
 
         $data = json_decode($content, true);
 
-        $flavorTextEntries = $data['flavor_text_entries'];
+        $flavorTextEntries = $data['flavor_text_entries'] ?? [];
 
         if (empty($flavorTextEntries)) {
             throw new NotFoundHttpException();

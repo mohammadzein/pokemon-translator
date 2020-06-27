@@ -9,24 +9,24 @@ use App\Translators\Contracts\TranslatorInterface;
 class PokemonService
 {
     /**
+     * pokemon api
+     *
+     * @var PokemonApiInterface
+     */
+    private $pokemonApi;
+
+    /**
      * text translator
      *
      * @var TranslatorInterface
      */
     private $translator;
 
-    /**
-     * pokemon source
-     *
-     * @var PokemonApiInterface
-     */
-    private $pokemonApi;
-
-    function __construct(TranslatorInterface $translator, PokemonApiInterface $pokemonApi)
+    function __construct(PokemonApiInterface $pokemonApi, TranslatorInterface $translator)
     {
-        $this->translator = $translator;
-
         $this->pokemonApi = $pokemonApi;
+
+        $this->translator = $translator;
     }
 
     /**
@@ -34,7 +34,6 @@ class PokemonService
      *
      * @param string $name
      * @return Pokemon
-     * @throws GuzzleException
      */
     public function getPokemon(string $name): Pokemon
     {
