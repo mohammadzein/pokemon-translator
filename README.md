@@ -1,24 +1,42 @@
-# Lumen PHP Framework
+# Pokemon Translator
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+This application translate english pokemon names to english shakespeare. 
+It uses the api of [PokéAPI website](https://pokeapi.co/) to get the pokemon description, and the api of [Funtranslation website](https://funtranslations.com/) to translate it.
+It is built with Lumen and can be served with Docker.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+### Requirements using Docker
+- Docker **19.03.8**
+- Docker Compose **1.25.5**
+- Port **5000** should be available
 
-## Official Documentation
+### Requirements without Docker
+- Nginx **1.18.0** or Apache **2.4.43**
+- PHP **^7.2.5** with extensions required by Lumen
+- Composer **1.10.5**
+
+### Docker Official Documentation
+
+Documentation for Docker can be found on [Docker website](https://docs.docker.com/)
+
+### Lumen Official Documentation
 
 Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
 
-## Contributing
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Installation
 
-## Security Vulnerabilities
+```bash
+git clone https://github.com/mohammadzein/pokemon-translator
+```
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+### Start the application with Docker Compose
 
-## License
+```bash
+docker-compose up
+```
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Stop the application with Docker Compose
+
+```bash
+docker-compose down
+```
