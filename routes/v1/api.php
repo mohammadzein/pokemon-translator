@@ -14,5 +14,13 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    $welcome = '<h1>Welcome to Pokemon Translator</h1>';
+    $information = '<h4>for more information please visit </h4>';
+    $link = '<a href="https://github.com/mohammadzein/pokemon-translator">pokemon translator github</a>';
+    return $welcome . $information . $link;
 });
+
+$router->get('pokemon/{name:[A-Za-z]+}', [
+    // 'middleware' => ['throttle:1,60'],
+    'uses' => 'PokemonController@get'
+]);
