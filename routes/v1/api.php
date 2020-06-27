@@ -21,6 +21,6 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('pokemon/{name:[A-Za-z]+}', [
-    // 'middleware' => ['throttle:1,60'],
+    'middleware' => ['throttle:10,60'],
     'uses' => 'PokemonController@get'
 ]);
