@@ -23,7 +23,7 @@ class Pokeapi implements PokemonApiInterface
         $this->baseUri = "https://pokeapi.co";
     }
 
-    public function getPokemonDescription(string $name, $filters): string
+    public function getPokemonDescription(string $name, array $filters): string
     {
         $descriptions = $this->getPokemonDescriptions($name);
 
