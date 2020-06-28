@@ -1,4 +1,4 @@
-FROM composer:latest as builder
+FROM composer:latest AS builder
 
 WORKDIR /app
 
