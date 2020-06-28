@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   pokemon-translator:
+    image: mohammadzein/pokemon-translator:v1
     container_name: pokemon-translator-php
     build:
       context: .
