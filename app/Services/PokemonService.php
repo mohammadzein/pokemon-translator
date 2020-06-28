@@ -33,11 +33,12 @@ class PokemonService
      * get pokemon object that contains name and description
      *
      * @param string $name
+     * @param array $filters
      * @return Pokemon
      */
-    public function getPokemon(string $name): Pokemon
+    public function getPokemon(string $name, array $filters): Pokemon
     {
-        $description = $this->pokemonApi->getPokemonDescription($name);
+        $description = $this->pokemonApi->getPokemonDescription($name, $filters);
         $descriptionTranslated = $this->translator->translate($description);
 
         return new Pokemon(

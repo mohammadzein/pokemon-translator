@@ -3,5 +3,5 @@
 namespace App\ApiClients\Contracts;
 
 interface PokemonApiInterface {
-    public function getPokemonDescription(string $name): string;
+    public function getPokemonDescription(string $name, array $filters): string;
 }

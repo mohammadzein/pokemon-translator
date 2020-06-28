@@ -40,3 +40,8 @@ docker-compose up
 ```bash
 docker-compose down
 ```
+
+### For developers to run test
+```
+docker exec -it <container_id_or_name> ./vendor/bin/phpunit 
+```

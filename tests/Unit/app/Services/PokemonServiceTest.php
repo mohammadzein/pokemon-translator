@@ -18,6 +18,11 @@ class PokemonServiceTest extends TestCase
             ->withAnyParameters()
             ->willReturn('pokemon description');
 
+        $filters = [
+            'language' => 'en',
+            'version' => 'ruby'
+        ];
+
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->method('translate')
             ->withAnyParameters()
@@ -26,7 +31,7 @@ class PokemonServiceTest extends TestCase
 
         $sut = new PokemonService($pokemonApi, $translator);
 
-        $result = $sut->getPokemon('pokemon name');
+        $result = $sut->getPokemon('pokemon name', $filters);
 
         $this->assertEquals(
             new Pokemon('pokemon name', 'pokemon translated description'),

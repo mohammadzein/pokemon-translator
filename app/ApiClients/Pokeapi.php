@@ -5,7 +5,6 @@ namespace App\ApiClients;
 use App\ApiClients\Contracts\PokemonApiInterface;
 use GuzzleHttp\ClientInterface;
 use Illuminate\Http\Response;
-use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Pokeapi implements PokemonApiInterface
@@ -24,17 +23,17 @@ class Pokeapi implements PokemonApiInterface
         $this->baseUri = "https://pokeapi.co";
     }
 
-    public function getPokemonDescription(string $name): string
+    public function getPokemonDescription(string $name, $filters): string
     {
         $descriptions = $this->getPokemonDescriptions($name);
 
+        $descriptions = $this->filterDescriptionsByLanguage($descriptions, $filters['language']);
+
+        $descriptions = $this->filterDescriptionsByVersion($descriptions, $filters['version']);
+
         $this->validateDescriptionsCount($descriptions);
 
-        $englishDescriptions = $this->filterDescriptionsByEnglish($descriptions);
-
-        $this->validateDescriptionsCount($englishDescriptions);
-
-        return $this->getRandomDescription($englishDescriptions);
+        return $descriptions[0]['flavor_text'];
     }
 
     private function getPokemonDescriptions(string $name): array
@@ -47,9 +46,7 @@ class Pokeapi implements PokemonApiInterface
 
         $flavorTextEntries = $data['flavor_text_entries'] ?? [];
 
-        if (empty($flavorTextEntries)) {
-            throw new NotFoundHttpException();
-        }
+        $this->validateDescriptionsCount($flavorTextEntries);
 
         return $flavorTextEntries;
     }
@@ -61,36 +58,41 @@ class Pokeapi implements PokemonApiInterface
      */
     private function validateDescriptionsCount(array $descriptions): void
     {
-        if (count($descriptions) === 0) {
-            throw new InvalidArgumentException(
+        if (empty($descriptions)) {
+            throw new NotFoundHttpException(
                 "Sorry we don't have any description for this pokemon",
+                null,
                 Response::HTTP_NOT_FOUND
             );
         }
     }
 
     /**
-     * get a random description from a list of descriptions
-     *
-     * @param array $descriptions
-     * @return string
-     */
-    private function getRandomDescription(array $descriptions): string
-    {
-        return $descriptions[array_rand($descriptions)]['flavor_text'];
-    }
-
-    /**
-     * get english descriptions only
+     * filter descriptions by language
      *
      * @param array $descriptions
      * @return array
      */
-    private function filterDescriptionsByEnglish(array $descriptions): array
+    private function filterDescriptionsByLanguage(array $descriptions, string $language): array
     {
         return array_values(
-            array_filter($descriptions, function ($description) {
-                return $description['language']['name'] == 'en';
+            array_filter($descriptions, function ($description) use ($language) {
+                return $description['language']['name'] == $language;
+            })
+        );
+    }
+
+    /**
+     * filter descriptions by version
+     *
+     * @param array $descriptions
+     * @return array
+     */
+    private function filterDescriptionsByVersion(array $descriptions, string $version): array
+    {
+        return array_values(
+            array_filter($descriptions, function ($description) use ($version) {
+                return $description['version']['name'] == $version;
             })
         );
     }

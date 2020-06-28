@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\JsonResponse as Response;
+use Illuminate\Http\Response;
 use Illuminate\Cache\RateLimiter;
 
 class ThrottleRequests
@@ -102,11 +102,12 @@ class ThrottleRequests
      *
      * @return \Illuminate\Http\Response
      */
-    protected function addHeaders(Response $response, $maxAttempts, $remainingAttempts, $retryAfter = null)
+    protected function addHeaders($response, $maxAttempts, $remainingAttempts, $retryAfter = null)
     {
         $headers = [
             'X-RateLimit-Limit'     => $maxAttempts,
             'X-RateLimit-Remaining' => $remainingAttempts,
+            'Content-Type' => 'application/json'
         ];
 
         if (!is_null($retryAfter)) {
